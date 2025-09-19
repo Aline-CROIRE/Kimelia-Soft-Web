@@ -9,26 +9,79 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Middleware
-app.use(cors()); // Enable CORS for all routes
-app.use(express.json()); // Body parser for JSON requests
+const allowedOrigins = ['http://localhost:3000', 'https://your-kimeliasoft-frontend-url.com']; // IMPORTANT: Update for production
 
-// Connect to MongoDB
-mongoose.connect(MONGO_URI)
-    .then(() => console.log('MongoDB connected successfully'))
-    .catch(err => console.error('MongoDB connection error:', err));
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    }
+}));
+app.use(express.json());
+
+// Define Service Schema and Model
+const serviceSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    icon: String // This will now store Font Awesome class names (e.g., 'fas fa-cogs')
+}, { timestamps: true });
+const Service = mongoose.model('Service', serviceSchema);
+
+// Seeding function to populate initial data if the collection is empty
+async function seedDatabase() {
+    try {
+        const serviceCount = await Service.countDocuments();
+        if (serviceCount === 0) {
+            const initialServices = [
+                {
+                    title: 'Enterprise Software Solutions',
+                    description: 'Building robust, scalable, and secure software platforms tailored for large organizations and critical infrastructure.',
+                    icon: 'fas fa-server' // Changed icon
+                },
+                {
+                    title: 'Innovative Product Incubation',
+                    description: 'Incubating visionary in-house products like Kimelia Luxe, ItekaRise, and Rwanda Digital Twin from concept to market impact.',
+                    icon: 'fas fa-lightbulb' // Changed icon
+                },
+                {
+                    title: 'Client Project Transformation',
+                    description: 'Delivering bespoke software projects that combine deep local insights, human-first design, and modern engineering excellence.',
+                    icon: 'fas fa-project-diagram' // Changed icon
+                },
+                {
+                    title: 'Strategic Tech Consulting',
+                    description: 'Providing expert guidance on digital transformation, technology strategy, and scalable software architecture to empower your business.',
+                    icon: 'fas fa-chart-line' // Changed icon
+                },
+                {
+                    title: 'UX/UI Design & Prototyping',
+                    description: 'Crafting intuitive, engaging, and beautiful user experiences that resonate with end-users and drive successful adoption.',
+                    icon: 'fas fa-paint-brush' // Changed icon
+                },
+                {
+                    title: 'Cloud & Infrastructure Services',
+                    description: 'Designing, deploying, and managing robust cloud-native solutions for optimal performance, scalability, and security.',
+                    icon: 'fas fa-cloud' // Added a new service example
+                }
+            ];
+            await Service.insertMany(initialServices);
+            console.log('Initial services seeded successfully with Font Awesome icons.');
+        } else {
+            console.log('Services collection already contains data. Skipping seeding.');
+        }
+    } catch (error) {
+        console.error('Error seeding database:', error);
+    }
+}
 
 // Basic Route
 app.get('/', (req, res) => {
     res.send('Kimelia Soft API is running!');
 });
-
-// Example Route: Services (you'll expand this)
-const serviceSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    icon: String // Optional: for displaying an icon
-});
-const Service = mongoose.model('Service', serviceSchema);
 
 // Get all services
 app.get('/api/services', async (req, res) => {
@@ -37,21 +90,6 @@ app.get('/api/services', async (req, res) => {
         res.json(services);
     } catch (error) {
         res.status(500).json({ message: error.message });
-    }
-});
-
-// Add a new service (example: for initial data seeding or admin panel)
-app.post('/api/services', async (req, res) => {
-    const service = new Service({
-        title: req.body.title,
-        description: req.body.description,
-        icon: req.body.icon
-    });
-    try {
-        const newService = await service.save();
-        res.status(201).json(newService);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
     }
 });
 
