@@ -1,21 +1,21 @@
-// client/src/styles/theme.js
+
 export const theme = {
     colors: {
-        primary: '#0A1628', // Deep Tech Blue - Authority, trust, enterprise-grade reliability
-        secondary: '#0891B2', // Innovation Teal - Growth, technology, forward-thinking
-        white: '#FFFFFF', // Pure White - Clarity, precision, premium quality
-        success: '#059669', // Success Green - Growth, sustainability
-        warning: '#D97706', // Warning Amber - Innovation, energy
-        neutral: '#475569', // Neutral Slate - Professionalism, balance
+        primary: '#0A1628', 
+        secondary: '#0891B2', 
+        white: '#FFFFFF', 
+        success: '#059669', 
+        warning: '#D97706', 
+        neutral: '#475569', 
 
-        // Supporting Grays for better readability and layering
-        backgroundLight: '#F8FAFC', // Clean interfaces
-        textSecondary: '#64748B', // Readable content
-        textPrimary: '#1E293B', // Strong readability for main text
-        border: '#E2E8F0', // Light border color
+    
+        backgroundLight: '#F8FAFC', 
+        textSecondary: '#64748B',  
+        textPrimary: '#1E293B', 
+        border: '#E2E8F0', 
     },
     typography: {
-        fontFamily: "'Poppins', sans-serif", // Main brand font
+        fontFamily: "'Poppins', sans-serif", 
         h1: { fontSize: '3.5rem', fontWeight: 700, lineHeight: 1.2 }, // For main page titles
         h2: { fontSize: '2.8rem', fontWeight: 700, lineHeight: 1.25 }, // For section titles
         h3: { fontSize: '2rem', fontWeight: 600, lineHeight: 1.3 },  // For sub-section titles/card titles
