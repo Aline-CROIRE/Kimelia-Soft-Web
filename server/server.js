@@ -1,5 +1,5 @@
 // server/server.js
-require('dotenv').config(); // Load environment variables from .env file
+require('dotenv').config(); 
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Middleware
-const allowedOrigins = ['http://localhost:3000', 'https://your-kimeliasoft-frontend-url.com']; // IMPORTANT: Update for production
+const allowedOrigins = ['http://localhost:3000', 'https://your-kimeliasoft-frontend-url.com']; 
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -27,11 +27,11 @@ app.use(express.json());
 const serviceSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    icon: String // This will now store Font Awesome class names (e.g., 'fas fa-cogs')
+    icon: String 
 }, { timestamps: true });
 const Service = mongoose.model('Service', serviceSchema);
 
-// Seeding function to populate initial data if the collection is empty
+
 async function seedDatabase() {
     try {
         const serviceCount = await Service.countDocuments();
@@ -45,7 +45,7 @@ async function seedDatabase() {
                 {
                     title: 'Innovative Product Incubation',
                     description: 'Incubating visionary in-house products like Kimelia Luxe, ItekaRise, and Rwanda Digital Twin from concept to market impact.',
-                    icon: 'fas fa-lightbulb' // Changed icon
+                    icon: 'fas fa-lightbulb' 
                 },
                 {
                     title: 'Client Project Transformation',
