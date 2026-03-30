@@ -1,11 +1,6 @@
 // client/src/components/common/BrandLogo.js
 import React from 'react';
 import styled from 'styled-components';
-
-// This is the path to your SVG logo in the public folder.
-// When React builds the app, files in `public` are directly copied to the root of the build folder.
-// So, you can reference them relative to the root, like '/kimelia-soft-logo.svg'.
-// Make sure 'kimelia-soft-logo.svg' is actually in your client/public directory.
 const logoSvgPath = '/kimelia-soft-logo.svg';
 
 const StyledBrandLogo = styled.a`
