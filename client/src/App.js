@@ -15,12 +15,12 @@ import ServicesSection from './components/sections/ServicesSection';
 import ContactSection from './components/sections/ContactSection';
 
 const MainContent = styled.main`
-    /* General styling for main content area if needed, e.g., padding-top to account for fixed navbar */
+    
 `;
 
 function App() {
     return (
-        <div id="top"> {/* Anchor for "back to top" link in Navbar */}
+        <div id="top"> 
             <Navbar />
             <MainContent>
                 <Hero />
